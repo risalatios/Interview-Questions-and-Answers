@@ -1,0 +1,79 @@
+import UIKit
+
+
+
+/*
+ Q-- Find the longest substring with k unique characters in a given string
+ Or Given a string, find the longest substring which contains 2 unique characters. ""abcbbbbcccbdddadacb" => "bcbbbbcccb"
+ 
+ Sol;-The problem can be solved in O(n). Idea is to maintain a window and add elements to the window till it contains less or equal k, update our result if required while doing so. If unique elements exceeds than required in window, start removing the elements from left side.
+ Below are the implementations of above. The implementations assume that the input string alphabet contains only 26 characters (from ‘a’ to ‘z’). The code can be easily extended to 256 characters.
+
+ */
+extension String {
+    subscript(_ offSet: Int) -> Character {
+        let index = self.index(self.startIndex, offsetBy: offSet)
+        return self[index]
+    }
+    
+    subscript(_ range: CountableRange<Int>) -> String {
+            let start = index(startIndex, offsetBy: max(0, range.lowerBound))
+            let end = index(start, offsetBy: min(self.count - range.lowerBound,
+                                                 range.upperBound - range.lowerBound))
+            return String(self[start..<end])
+        }
+
+        subscript(_ range: CountablePartialRangeFrom<Int>) -> String {
+            let start = index(startIndex, offsetBy: max(0, range.lowerBound))
+             return String(self[start...])
+        }
+}
+
+func isValid(array: [Int], k: Int) -> Bool {
+    // here we need to test k is greater or equal to count of array
+    var val = 0
+    for item in array {
+        if item > 0 {
+            val += 1
+        }
+    }
+    
+    return k >= val
+}
+
+let str = "abcbbbbcccbdddadacb"
+
+var countArray = Array<Int>(repeating: 0, count: str.count)
+
+let firstChDiff: Int = Int((str[0].asciiValue ?? 0) - (Character("a").asciiValue ?? 0))
+countArray[firstChDiff] += 1
+
+var c_start = 0
+var c_end = 0
+var w_start = 0
+var w_size = 1
+let k = 2
+for i in stride(from: 1, to: str.count, by: 1) {
+    let diff = Int((str[i].asciiValue ?? 0) - (Character("a").asciiValue ?? 0))
+    countArray[diff] += 1
+    c_end += 1
+    
+    while !isValid(array: countArray, k: k) {
+        let diff = Int((str[c_start].asciiValue ?? 0) - (Character("a").asciiValue ?? 0))
+        countArray[diff] -= 1
+        c_start += 1
+    }
+    
+    
+    if (c_end - c_start + 1) > w_size {
+        w_size = (c_end - c_start + 1)
+        w_start = c_start
+    }
+}
+
+print(w_start, w_size, countArray)
+
+
+print(str[w_start..<w_start + w_size])
+//bcbbbbcccb
+//bcbbbbcccb
