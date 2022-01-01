@@ -1,0 +1,18 @@
+
+/*
+ Can write a function which inputs two ints and check if it is 3 it should return 6 if input is 6 return 3, without using any condition.
+ or
+ Write a function that returns 2 for input 1 and returns 1 for 2
+ 
+ We can use bitwise xor operator.
+ */
+func valueChangeFor3or6(number: Int) -> Int {
+    return number ^ 3 ^ 6
+}
+
+
+print(valueChangeFor3or6(number: 6))
+
+func valueChangeFor1or2(number: Int) -> Int {
+    return number ^ 1 ^ 2
+}
