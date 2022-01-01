@@ -1,0 +1,57 @@
+Q#2. Given an array, find the Next Greater Element (NGE) for every element. The Next greater Element for an element x is the first greater element on the right side of x in the array. Elements for which no greater element exists, consider the next greater element as -1.
+ //[13, 7, 6, 12]
+ Element        NGE
+    13      -->    -1
+    7       -->     12
+    6       -->     12
+    12      -->     -1
+ */
+
+/*
+ Given an array, print the Next Greater Element (NGE) for every element. The Next greater Element for an element x is the first greater element on the right side of x in the array. Elements for which no greater element exist, consider the next greater element as -1.
+ */
+
+struct Stack<T> {
+     var items: [T] = []
+    
+    mutating func push(_ item: T) {
+        items.append(item)
+    }
+    
+    mutating func pop()->T {
+        return items.removeLast()
+    }
+    
+    var top: T {
+        return items.last!
+    }
+    
+    var isEmpty: Bool {
+        return items.isEmpty
+    }
+}
+
+
+var stack = Stack<Int>()
+
+var arrayOfNext:[Int] = [2,23,12,45,8]
+var res = Array<Int>(repeating: 0, count: arrayOfNext.count)
+
+
+//push first element into the stack
+// iterate over array
+// if item < pop first stack
+    
+    for i in stride(from: arrayOfNext.count - 1, through: 0, by: -1) {
+        
+        if !stack.isEmpty {
+            while !stack.isEmpty , arrayOfNext[i] >= stack.top{
+                stack.pop()
+            }
+        }
+        res[i] = stack.isEmpty ? -1 : stack.top
+        print(res)
+        stack.push(arrayOfNext[i])
+    }
+
+print(arrayOfNext, res)
