@@ -1,0 +1,30 @@
+import UIKit
+
+extension UIView {
+    func sameSuperview(other: UIView)-> UIView? {
+        
+        guard self.superview != nil || other.superview != nil else { return nil }
+        
+        var superViews: [UIView] = []
+        
+        var selfSuperView = self.superview
+        
+        while selfSuperView != nil { superViews.append(selfSuperView!)
+            selfSuperView = selfSuperView!.superview
+        }
+        
+        selfSuperView = other.superview
+        
+        while selfSuperView != nil {
+            
+            if superViews.contains(selfSuperView!)
+            {
+                return selfSuperView
+                
+            }
+            selfSuperView = selfSuperView!.superview
+            
+        }
+        return nil
+    }
+}
