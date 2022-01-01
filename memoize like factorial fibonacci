@@ -1,0 +1,28 @@
+func memoize<T: Hashable, U>(body: @escaping ((T)-> U, T) -> U) -> (T)-> U {
+    var memo = Dictionary<T, U>()
+    var result: ((T)->U)!
+    result = { x in
+        if let q = memo[x] {
+            return q
+        }
+        
+        let r = body(result, x)
+        memo[x] = r
+        return r
+    }
+    
+    return result
+}
+
+
+let fibonacci = memoize { fibo, n in
+   return n < 2 ? n : fibo(n - 1) + fibo(n - 2)
+}
+
+print(fibonacci(3))
+
+let fact = memoize { fibo, n in
+   return n == 1 ? 1 : n * fibo(n - 1)
+}
+
+print(fact(3))
