@@ -1,0 +1,20 @@
+//Move all zeroes to end of array
+//Time Complexity: O(n).
+//Auxiliary Space: O(1).
+var mixedArray = [0,1,2,3,4,0,0,5,0,9]
+
+var countNonzero = 0
+let n = mixedArray.count
+for i in stride(from: 0, to: n, by: 1) {
+    
+    if mixedArray[i] != 0 {
+        mixedArray[countNonzero] = mixedArray[i]
+        countNonzero += 1
+    }
+}
+print(countNonzero)
+for i in stride(from: countNonzero, to: n, by: 1) {
+    mixedArray[i] = 0
+}
+
+print(mixedArray)
